@@ -19,7 +19,7 @@ vault:
 
 run:
   stage: run
-  image: ansible/ansible
+  image: willhallonline/ansible:alpine
   script:
     - mkdir ~/.ssh
     - echo $SSH_KEY > ~/.ssh/id_rsa && chmod 400 ~/.ssh/id_rsa
