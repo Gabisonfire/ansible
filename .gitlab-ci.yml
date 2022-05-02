@@ -1,14 +1,13 @@
 default:
-    tags:
-        - gab
+  tags:
+    - gab
+  variables:
+    VAULT_TOKEN: ""
+    VAULT_ADDR: http://vault.vault.svc.cluster.local:8200
+    SSH_KEY: ""
 stages:
   - auth
   - run
-
-variables:
-  VAULT_TOKEN: ""
-  VAULT_ADDR: http://vault.vault.svc.cluster.local:8200
-  SSH_KEY: ""
 
 vault:
   stage: auth
@@ -20,3 +19,7 @@ vault:
 run:
   stage: run
   image: ansible/ansible
+  script:
+    - mkdir ~/.ssh
+    - echo $SSH_KEY > ~/.ssh/id_rsa && chmod 400 ~/.ssh/id_rsa
+    - ansible-playbook -i inventory/luna base.yml
