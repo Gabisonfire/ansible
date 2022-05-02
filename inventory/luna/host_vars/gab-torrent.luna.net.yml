@@ -1,0 +1,16 @@
+---
+mount: cifs
+
+cifs_mounts:
+  torrents:
+    source: //gab-data-10gb-proxmox.luna.net/Torrents
+    dest: /mnt/torrents
+  series:
+    source: //gab-data-10gb-proxmox.luna.net/series
+    dest: /mnt/series
+  movies:
+    source: //gab-data-10gb-proxmox.luna.net/movies
+    dest: /mnt/movies
+  media:
+    source: //gab-data-10gb-proxmox.luna.net/Media
+    dest: /mnt/media

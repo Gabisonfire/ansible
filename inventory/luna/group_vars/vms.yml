@@ -1,0 +1,30 @@
+---
+packages:
+  - htop
+  - git
+  - wget
+  - zsh
+  - python-pip
+  - unzip
+  - curl
+  - cifs-utils
+  - mlocate
+  - tmux
+  - jq
+  - net-tools
+  - telnet
+  - screen
+  - bind-utils
+  - iotop
+  - vim
+  - util-linux
+  - nfs-utils
+
+root_password: "$6$1ThI.YitKyMd.deb$i2xTtUULXz1Dg259dXk2HITe2PY8SXPqt008wxQKiuHPspCKRcFIJ3DEL39MsUsSqogqBEJueMXwjjqyNnqpv1"
+mounts: {}
+
+zabbix_directories:
+  - /etc/zabbix/alertscripts
+  - /etc/zabbix/modules
+  - /etc/zabbix/externalscripts
+  - /etc/zabbix/extras

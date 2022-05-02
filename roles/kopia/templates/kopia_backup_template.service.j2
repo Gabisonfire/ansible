@@ -1,0 +1,14 @@
+[Unit]
+Description=Backup of {{ path }}
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/kopia snapshot create {{ path }}
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=kopia_backup_{{ unit_name }}
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target

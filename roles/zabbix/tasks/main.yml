@@ -1,0 +1,53 @@
+---
+- name: Download zabbix-agent
+  get_url:
+    url: "http://repo.zabbix.com/zabbix/5.0/rhel/7/x86_64/zabbix-agent-5.0.8-1.el7.x86_64.rpm"
+    dest: "/tmp/zabbix-agent.rpm"
+
+- name: Download zabbix-sender
+  get_url:
+    url: "http://repo.zabbix.com/zabbix/5.0/rhel/7/x86_64/zabbix-sender-5.0.8-1.el7.x86_64.rpm"
+    dest: "/tmp/zabbix-sender.rpm"
+
+- name: Install zabbix agent
+  yum:
+    state: installed
+    name: "/tmp/zabbix-agent.rpm"
+  notify: zabbix-agent-restart
+
+- name: Install zabbix sender
+  yum:
+    state: installed
+    name: "/tmp/zabbix-sender.rpm"
+
+- name: Give zabbix permissions to configs
+  ansible.builtin.file:
+    path: /etc/server-configs/zabbix
+    owner: zabbix
+    group: zabbix
+    recurse: true
+  notify: zabbix-agent-restart
+
+- name: Give zabbix permissions to its folder
+  ansible.builtin.file:
+    path: /etc/zabbix
+    owner: zabbix
+    group: zabbix
+    recurse: true
+  notify: zabbix-agent-restart
+
+- name: Create needed links
+  ansible.builtin.file:
+    src: "/etc/server-configs/zabbix/{{ item | basename }}"
+    dest: "{{item}}"
+    owner: zabbix
+    group: zabbix
+    state: link
+  loop: "{{ zabbix_directories }}"
+  notify: zabbix-agent-restart
+
+- name: Copy zabbix config
+  ansible.builtin.copy:
+    src: zabbix.conf
+    dest: '/etc/zabbix/zabbix_agentd.conf'
+  notify: zabbix-agent-restart

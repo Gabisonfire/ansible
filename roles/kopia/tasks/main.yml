@@ -1,0 +1,45 @@
+---
+- name: Setting service file
+  ansible.builtin.template:
+    src: kopia_backup_template.service.j2
+    dest: "/etc/systemd/system/kopia_backup_{{ item.key }}.service"
+    owner: root
+    group: root
+    mode: '0644'
+  loop: "{{ kopia | dict2items }}"
+  vars:
+    path: "{{ item.value.path }}"
+    description: "{{ item.value.description }}"
+    time_string: "{{ item.value.time_string }}"
+    unit_name: "{{ item.key }}"
+
+- name: Setting timer file
+  ansible.builtin.template:
+    src: kopia_backup_template.timer.j2
+    dest: "/etc/systemd/system/kopia_backup_{{ item.key }}.timer"
+    owner: root
+    group: root
+    mode: '0644'
+  loop: "{{ kopia | dict2items }}"
+  vars:
+    path: "{{ item.value.path }}"
+    description: "{{ item.value.description }}"
+    time_string: "{{ item.value.time_string }}"
+    unit_name: "kopia_backup_{{ item.key }}"
+
+- name: Syslog config
+  ansible.builtin.template:
+    src: syslog.conf.j2
+    dest: "/etc/rsyslog.d/kopia.conf"
+    owner: root
+    group: root
+    mode: '0644'
+  notify: rsyslog-restart
+
+- name: Ensure timers are enabled and running
+  ansible.builtin.systemd:
+    daemon_reload: yes
+    state: started
+    enabled: yes
+    name: kopia_backup_{{ item.key }}.timer  
+  loop: "{{ kopia | dict2items }}"

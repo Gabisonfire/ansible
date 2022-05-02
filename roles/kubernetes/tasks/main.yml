@@ -1,0 +1,34 @@
+---
+- name: Add Kubernetes repo
+  yum_repository:
+    name: kubernetes
+    description: Kubernetes YUM repo
+    baseurl: 'https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64'
+    gpgkey: 'https://packages.cloud.google.com/yum/doc/yum-key.gpg'
+
+- name: Install kubernetes packages
+  yum:
+    state: installed
+    name: "{{ k8s_packages }}"
+
+- name: Add the netfilter module
+  community.general.modprobe:
+    name: br_netfilter
+    state: present
+
+- name: Set sysctl values
+  ansible.posix.sysctl:
+    name: "{{ item.key }}"
+    value: "{{ item.value }}"
+  loop: "{{ kubernetes_sysctl | dict2items }}"
+
+- name: Create folder for CIFS Flexvolume
+  ansible.builtin.file:
+    path: '/usr/libexec/kubernetes/kubelet-plugins/volume/exec/fstab~cifs'
+    state: directory
+
+- name: CIFS Flexvolume script
+  get_url:
+    url: https://raw.githubusercontent.com/fstab/cifs/master/cifs
+    dest: '/usr/libexec/kubernetes/kubelet-plugins/volume/exec/fstab~cifs/cifs'
+    mode: '0755'

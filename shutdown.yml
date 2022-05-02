@@ -1,0 +1,9 @@
+---
+- hosts: all
+  gather_facts: false
+  tasks:
+  - name: Shutdown all machines
+    community.general.shutdown:
+      delay: "{{ shutdown_delay }}"
+    ignore_errors: true
+

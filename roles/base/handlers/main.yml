@@ -1,0 +1,3 @@
+---
+- name: update-ca-store
+  ansible.builtin.shell: '/usr/bin/update-ca-trust'

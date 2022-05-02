@@ -1,0 +1,4 @@
+{% for item in kopia.keys() %}
+if $programname == 'kopia_backup_{{ item }}' then /var/log/kopia_backup_{{ item }}.log
+{% endfor %}
+& stop

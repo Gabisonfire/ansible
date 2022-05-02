@@ -1,0 +1,67 @@
+---
+- name: Ensure old versions of Docker are not installed.
+  package:
+    name:
+      - docker
+      - docker-common
+      - docker-engine
+    state: absent
+
+- name: Add Docker GPG key.
+  rpm_key:
+    key: "https://download.docker.com/linux/centos/gpg"
+    state: present
+
+- name: Add Docker repository.
+  get_url:
+    url: "https://download.docker.com/linux/centos/docker-ce.repo"
+    dest: '/etc/yum.repos.d/docker-ce.repo'
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Install Docker.
+  package:
+    name: "docker-ce"
+    state: present
+  notify: docker-restart
+
+- name: Create docker certs directory if it does not exist
+  ansible.builtin.file:
+    path: '/etc/docker/certs.d/k8s.luna.net'
+    state: directory
+
+- name: Copy root CA
+  ansible.builtin.copy:
+    src: luna.crt
+    dest: '/etc/docker/certs.d/k8s.luna.net/luna.crt'
+
+- name: Install docker mount check script
+  ansible.builtin.copy:
+    src: check_mounts.sh
+    dest: '/etc/docker/check_mounts.sh'
+  when: not is_kubernetes | bool 
+
+- name: Install service file
+  ansible.builtin.copy:
+    src: docker.service
+    dest: '/usr/lib/systemd/system/docker.service'
+  when: not is_kubernetes | bool 
+
+- name: Ensure Docker is started and enabled at boot.
+  systemd:
+    daemon_reload: true
+    name: docker
+    state: started
+    enabled: true
+
+- name: Copy daemon settings (Kubernetes)
+  ansible.builtin.copy:
+    src: daemon.k8s.json
+    dest: '/etc/docker/daemon.json'
+  notify: docker-restart
+  when: is_kubernetes | bool 
+
+- name: Install docker-compose if needed.
+  include_tasks: docker-compose.yml
+  when: docker_compose_install | bool

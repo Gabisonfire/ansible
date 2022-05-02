@@ -1,0 +1,22 @@
+---
+- name: Base
+  hosts:
+    - vms
+    - gab-metal01.luna.net
+  roles:
+    - base
+    - mounts
+    - zabbix
+
+- name: Docker
+  hosts:
+    - docker
+  roles:
+    - docker
+
+- name: Kubernetes
+  hosts:
+    - k8s
+  roles:
+    - docker
+    - kubernetes

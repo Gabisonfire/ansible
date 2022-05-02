@@ -1,0 +1,40 @@
+---
+- name: Create needed credentials
+  ansible.builtin.template:
+    src: secure.j2
+    dest: '/root/.secure'
+    mode: 0400
+
+- name: Create directories if needed (NFS)
+  ansible.builtin.file:
+    path: "{{ item.value.dest }}"
+    state: directory
+  loop: "{{ nfs_mounts | dict2items }}"
+  when: nfs_mounts is defined and mount == "nfs"
+
+- name: Create directories if needed (CIFS)
+  ansible.builtin.file:
+    path: "{{ item.value.dest }}"
+    state: directory
+  loop: "{{ cifs_mounts | dict2items }}"
+  when: cifs_mounts is defined and mount == "cifs"
+
+- name: Mount needed nfs network shares
+  ansible.posix.mount:
+    path: "{{ item.value.dest }}"
+    src: "{{ item.value.source }}"
+    fstype: nfs
+    state: mounted
+    opts: '_netdev,auto,x-systemd.automount'
+  loop: "{{ nfs_mounts | dict2items }}"
+  when: nfs_mounts is defined and mount == "nfs"
+
+- name: Mount needed cifs network shares
+  ansible.posix.mount:
+    path: "{{ item.value.dest }}"
+    src: "{{ item.value.source }}"
+    fstype: cifs
+    state: mounted
+    opts: '_netdev,auto,credentials=/root/.secure,file_mode=0777,dir_mode=0777,noperm'
+  loop: "{{ cifs_mounts | dict2items }}"
+  when: cifs_mounts is defined and mount == "cifs"
