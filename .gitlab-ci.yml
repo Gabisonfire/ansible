@@ -13,11 +13,12 @@ vault:
   stage: auth
   image: hashicorp/vault
   script:
-    - export VAULT_TOKEN="$(vault write -field=token auth/jwt/login role=ansible jwt=$CI_JOB_JWT)"
+    - vault write -field=token auth/jwt/login role=ansible jwt=$CI_JOB_JWT > token
     - vault kv get -field=ansible_ssh_key kv/ansible > ssh_key
   artifacts:
     paths:
       - ssh_key
+      - token
     expire_in: 1 minute
 
 run:
@@ -26,6 +27,14 @@ run:
   script:
     - mkdir ~/.ssh
     - cp ssh_key ~/.ssh/id_rsa && chmod 400 ~/.ssh/id_rsa
-    - export ANSIBLE_HOST_KEY_CHECKING=False
+    - export VAULT_TOKEN=$(cat token)
+    - |
+        cat << EOF > ~/.ansible.cfg
+        [defaults]
+        host_key_checking = False
+
+        [ssh_connection]
+        ssh_args = -o ForwardAgent=yes -o ControlMaster=auto -o ControlPersist=60s
+        EOF
     - pip install hvac
     - ansible-playbook -i inventory/luna base.yml
