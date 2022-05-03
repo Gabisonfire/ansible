@@ -14,7 +14,7 @@ vault:
   image: hashicorp/vault
   script:
     - export VAULT_TOKEN="$(vault write -field=token auth/jwt/login role=ansible jwt=$CI_JOB_JWT)"
-    - vault kv get -field=fake_ansible_ssh_key kv/ansible > ssh_key
+    - vault kv get -field=ansible_ssh_key kv/ansible > ssh_key
   artifacts:
     paths:
       - ssh_key
@@ -26,6 +26,5 @@ run:
   script:
     - mkdir ~/.ssh
     - cp ssh_key ~/.ssh/id_rsa && chmod 400 ~/.ssh/id_rsa
-    - cat ~/.ssh/id_rsa
     - export ANSIBLE_HOST_KEY_CHECKING=False
     - ansible-playbook -i inventory/luna base.yml
