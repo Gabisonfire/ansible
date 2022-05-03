@@ -1,8 +1,8 @@
 default:
   tags:
     - gab
+
 variables:
-  VAULT_TOKEN: ""
   VAULT_ADDR: http://vault.vault.svc.cluster.local:8200
 
 stages:
@@ -14,7 +14,7 @@ vault:
   image: hashicorp/vault
   script:
     - vault write -field=token auth/jwt/login role=ansible jwt=$CI_JOB_JWT > token
-    - vault kv get -field=ansible_ssh_key kv/ansible > ssh_key
+    - export VAULT_TOKEN=$(cat token) && vault kv get -field=ansible_ssh_key kv/ansible > ssh_key
   artifacts:
     paths:
       - ssh_key
