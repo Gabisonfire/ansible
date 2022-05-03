@@ -30,7 +30,6 @@ run:
     - eval `ssh-agent`
     - ssh-add
     - export VAULT_TOKEN=$(cat token)
-    - echo $VAULT_TOKEN
     - |
         cat << EOF > ~/.ansible.cfg
         [defaults]
