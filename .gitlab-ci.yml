@@ -29,8 +29,8 @@ run:
     - cp ssh_key ~/.ssh/id_rsa && chmod 400 ~/.ssh/id_rsa
     - eval `ssh-agent`
     - ssh-add
-    - ssh-add -l
     - export VAULT_TOKEN=$(cat token)
+    - echo $VAULT_TOKEN
     - |
         cat << EOF > ~/.ansible.cfg
         [defaults]
