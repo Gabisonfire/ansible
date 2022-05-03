@@ -25,6 +25,6 @@ run:
   image: willhallonline/ansible:alpine
   script:
     - mkdir ~/.ssh
-    - cp ssh_key > ~/.ssh/id_rsa && chmod 400 ~/.ssh/id_rsa
+    - cp ssh_key ~/.ssh/id_rsa && chmod 400 ~/.ssh/id_rsa
     - export ANSIBLE_HOST_KEY_CHECKING=False
     - ansible-playbook -i inventory/luna base.yml
