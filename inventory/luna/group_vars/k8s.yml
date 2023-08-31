@@ -1,6 +1,6 @@
 k8s_packages:
-  - kubeadm 
-  - kubelet
+  - kubeadm-1.20.15
+  - kubelet-1.20.15
   - nfs-utils
   - iscsi-initiator-utils
 

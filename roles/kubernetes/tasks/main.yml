@@ -10,6 +10,7 @@
   yum:
     state: installed
     name: "{{ k8s_packages }}"
+    disable_gpg_check: true
 
 - name: Add the netfilter module
   community.general.modprobe:
