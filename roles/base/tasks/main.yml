@@ -1,9 +1,7 @@
-- name: Add yum repository
-  yum_repository:
-    name: epel
-    description: EPEL YUM repo
-    metalink: "https://mirrors.fedoraproject.org/metalink?repo=epel-7&arch=$basearch"
-    gpgkey: "http://mirror.its.dal.ca/pub/epel/RPM-GPG-KEY-EPEL-7"
+- name: Install epel repo
+  yum:
+    state: installed
+    name: epel-release
 
 - name: Install common packages
   yum:
@@ -25,12 +23,6 @@
   git:
     repo: 'https://github.com/robbyrussell/oh-my-zsh.git'
     dest: '/root/.oh-my-zsh'
-
-- name: Copy server configs repo
-  git:
-    repo: 'git@github.com:Gabisonfire/server-configs.git'
-    accept_hostkey: true
-    dest: '/etc/server-configs'
 
 - name: Copy zshrc
   ansible.builtin.copy:
@@ -58,18 +50,3 @@
     src: luna.crt
     dest: '/etc/pki/ca-trust/source/anchors/luna.crt'
   notify: update-ca-store
-
-- name: Remove gab repository
-  yum_repository:
-    name: gab-repo
-    state: absent
-
-- name: Remove old configs directory
-  ansible.builtin.file:
-    state: absent
-    path: /etc/configs/
-
-- name: Remove old configs directory
-  ansible.builtin.file:
-    state: absent
-    path: /root/server-configs/

@@ -3,10 +3,37 @@
   hosts:
     - vms
     - gab-metal01.luna.net
+    - 192.168.0.89
+    - gab-data.luna.net
   roles:
     - base
     - mounts
-    - zabbix
+    - node_exporter
+
+# - name: Base
+#   hosts:
+#     - base
+#   roles:
+#     - base
+#     - mounts
+
+# - hosts: base
+#   strategy: free
+#   gather_facts: false
+#   tasks:
+#   - name: Kill running yum
+#     shell: "kill -9 $(ps -ef | grep -v grep | grep -w yum | awk '{print $2}')"
+#     ignore_errors: yes
+#   - name: upgrade all packages
+#     yum: 
+#       name: "*"
+#       state: latest
+#       exclude:
+#         - kubectl
+#         - kubeadm
+#         - kubelet
+#         - kubernetes-cni
+#       disable_gpg_check: true
 
 - name: Docker
   hosts:
@@ -18,5 +45,7 @@
   hosts:
     - k8s
   roles:
+    - base
+    - mounts
     - docker
     - kubernetes

@@ -22,14 +22,3 @@
     name: "{{ item.key }}"
     value: "{{ item.value }}"
   loop: "{{ kubernetes_sysctl | dict2items }}"
-
-- name: Create folder for CIFS Flexvolume
-  ansible.builtin.file:
-    path: '/usr/libexec/kubernetes/kubelet-plugins/volume/exec/fstab~cifs'
-    state: directory
-
-- name: CIFS Flexvolume script
-  get_url:
-    url: https://raw.githubusercontent.com/fstab/cifs/master/cifs
-    dest: '/usr/libexec/kubernetes/kubelet-plugins/volume/exec/fstab~cifs/cifs'
-    mode: '0755'
