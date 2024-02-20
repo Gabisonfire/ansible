@@ -12,9 +12,6 @@ mounts:
   backups:
     source: //gab-data-10gb-proxmox.luna.net/cold/backups
     dest: /mnt/backups
-  minio:
-    source: //gab-data-10gb-proxmox.luna.net/cold/minio
-    dest: /mnt/minio
   movies:
     source: //gab-data-10gb-proxmox.luna.net/hot/movies
     dest: /mnt/movies

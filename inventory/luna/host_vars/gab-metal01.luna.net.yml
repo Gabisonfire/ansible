@@ -1,25 +1,19 @@
 ---
 mounts:
-  torrents:
-    source: //gab-data-10gb-proxmox.luna.net/hot/torrents
-    dest: /mnt/torrents
   series:
-    source: //gab-data-10gb-proxmox.luna.net/hot/series
+    source: //gab-data-10gb-metal.luna.net/hot/series
     dest: /mnt/series
   classics:
-    source: //gab-data-10gb-proxmox.luna.net/hot/classics
+    source: //gab-data-10gb-metal.luna.net/hot/classics
     dest: /mnt/classics
   backups:
-    source: //gab-data-10gb-proxmox.luna.net/cold/backups
+    source: //gab-data-10gb-metal.luna.net/cold/backups
     dest: /mnt/backups
-  minio:
-    source: //gab-data-10gb-proxmox.luna.net/cold/minio
-    dest: /mnt/minio
   movies:
-    source: //gab-data-10gb-proxmox.luna.net/hot/movies
+    source: //gab-data-10gb-metal.luna.net/hot/movies
     dest: /mnt/movies
   docs:
-    source: //gab-data-10gb-proxmox.luna.net/cold/docs
+    source: //gab-data-10gb-metal.luna.net/cold/docs
     dest: /mnt/docs
 
 kopia:
@@ -30,8 +24,4 @@ kopia:
   backups:
     description: "Backup of /mnt/backups"
     path: "/mnt/backups"
-    time_string: "Mon *-*-* 01:00:00"
-  velero:
-    description: "Backup of /mnt/minio/velero"
-    path: "/mnt/minio/velero"
-    time_string: "Fri *-*-* 01:00:00"
+    time_string: "Mon *-*-* 02:00:00"

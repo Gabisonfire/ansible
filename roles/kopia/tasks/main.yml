@@ -43,3 +43,18 @@
     enabled: yes
     name: kopia_backup_{{ item.key }}.timer  
   loop: "{{ kopia | dict2items }}"
+
+- name: Set kopia UI server service
+  ansible.builtin.template:
+    src: kopia_ui_server.service.j2
+    dest: "/etc/systemd/system/kopia_ui_server.service"
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Start kopia server
+  ansible.builtin.systemd:
+    daemon_reload: yes
+    state: started
+    enabled: yes
+    name: kopia_ui_server.service 
