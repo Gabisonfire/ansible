@@ -1,0 +1,11 @@
+[Unit]
+Description=Kopia server
+
+[Service]
+Type=simple
+ExecStart=kopia server start --address http://192.168.0.88:51515 --insecure --server-username gabisonfire@192.168.0.250
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target
