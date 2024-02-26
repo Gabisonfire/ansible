@@ -5,6 +5,6 @@ gab-k8s-master.luna.net shutdown_delay=0
 gab-k8s-worker1.luna.net shutdown_delay=0
 gab-k8s-worker2.luna.net shutdown_delay=0
 gab-k8s-worker3.luna.net shutdown_delay=0
-gab-homea.luna.net shutdown_delay=0
+#gab-homea.luna.net shutdown_delay=0
 gab-docker.luna.net shutdown_delay=0
 gab-data.luna.net shutdown_delay=0
