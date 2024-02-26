@@ -1,10 +1,10 @@
 [all]
 gab-proxmox.luna.net shutdown_delay=60
 gab-edge.luna.net ansible_user=gabisonfire ansible_python_interpreter=/usr/local/bin/python3 shutdown_delay=60
-gab-torrent.luna.net shutdown_delay=0
 gab-k8s-master.luna.net shutdown_delay=0
 gab-k8s-worker1.luna.net shutdown_delay=0
 gab-k8s-worker2.luna.net shutdown_delay=0
 gab-k8s-worker3.luna.net shutdown_delay=0
 gab-homea.luna.net shutdown_delay=0
 gab-docker.luna.net shutdown_delay=0
+gab-data.luna.net shutdown_delay=0

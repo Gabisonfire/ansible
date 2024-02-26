@@ -7,7 +7,6 @@ gab-k8s-worker3.luna.net
 [metal]
 gab-proxmox.luna.net
 gab-metal01.luna.net
-192.168.0.89 ansible_user=root ansible_ssh_pass=root
 gab-data.luna.net
 
 [router]
@@ -15,11 +14,11 @@ gab-edge.luna.net ansible_user=gabisonfire ansible_python_interpreter=/usr/local
 
 [vms]
 gab-docker.luna.net
-gab-torrent.luna.net
+#gab-torrent.luna.net
 
 [docker]
 gab-docker.luna.net
-192.168.0.89 ansible_user=root ansible_ssh_pass=root
+gab-metal01.luna.net
 
 [base]
 gab-base.luna.net
