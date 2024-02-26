@@ -9,12 +9,12 @@ mounts:
   backups:
     source: //gab-data-10gb-metal.luna.net/cold/backups
     dest: /mnt/backups
-  movies:
-    source: //gab-data-10gb-metal.luna.net/hot/movies
-    dest: /mnt/movies
   docs:
     source: //gab-data-10gb-metal.luna.net/cold/docs
     dest: /mnt/docs
+  games:
+    source: //gab-data-10gb-metal.luna.net/hot/games
+    dest: /mnt/games
 
 kopia:
   docs:
