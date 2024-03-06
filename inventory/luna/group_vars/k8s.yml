@@ -9,7 +9,7 @@ is_kubernetes: true
 
 kubernetes_sysctl: {
     "vm.max_map_count":"262144",
-    "net.ipv4.ip_local_port_range":"15000 61000",
+    "net.ipv4.ip_local_port_range": 1024 65000,
     "net.ipv4.tcp_fin_timeout":"30",
     "net.core.somaxconn":"1024",
     "net.core.netdev_max_backlog":"2000",

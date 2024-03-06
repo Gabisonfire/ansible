@@ -3,7 +3,7 @@ Description=Backup of {{ path }}
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/kopia snapshot create {{ path }}
+ExecStart=/usr/bin/kopia snapshot create {{ path }} --metrics-push-addr https://pushgateway.gabisonfire.io --metrics-push-job {{ unit_name }}
 StandardOutput=syslog
 StandardError=syslog
 SyslogIdentifier=kopia_backup_{{ unit_name }}
