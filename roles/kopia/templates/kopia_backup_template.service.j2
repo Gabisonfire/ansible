@@ -3,8 +3,7 @@ Description=Backup of {{ path }}
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/kopia snapshot create {{ path }} --metrics-push-addr https://pushgateway.gabisonfire.io --metrics-push-job {{ unit_name }}
-StandardOutput=syslog
+ExecStart=/bin/bash -c '/usr/bin/kopia snapshot create {{ path }} --metrics-push-addr https://pushgateway.gabisonfire.io --metrics-push-job {{ unit_name }} && echo "kopia_last_success{backup=\\"{{ unit_name }}\\"} $EPOCHSECONDS" > /etc/node_exporter/kopia.prom'
 StandardError=syslog
 SyslogIdentifier=kopia_backup_{{ unit_name }}
 User=root
