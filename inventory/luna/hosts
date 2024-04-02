@@ -9,6 +9,9 @@ gab-proxmox.luna.net
 gab-metal01.luna.net
 gab-data.luna.net
 
+[hypervisor]
+gab-proxmox.luna.net
+
 [router]
 gab-edge.luna.net ansible_user=gabisonfire ansible_python_interpreter=/usr/local/bin/python3
 
@@ -20,5 +23,5 @@ gab-docker.luna.net
 gab-docker.luna.net
 gab-metal01.luna.net
 
-[base]
-gab-base.luna.net
+# [base]
+# gab-base.luna.net

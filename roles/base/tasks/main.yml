@@ -2,11 +2,13 @@
   yum:
     state: installed
     name: epel-release
+  when: ansible_os_family == "RedHat"
 
 - name: Install common packages
   yum:
     state: installed
     name: "{{ packages }}"
+  when: ansible_os_family == "RedHat"
 
 - name: Disable firewalld
   ansible.builtin.systemd:
@@ -14,6 +16,12 @@
     state: stopped
     enabled: false
   ignore_errors: true
+
+- name: Enable Chrony
+  ansible.builtin.systemd:
+    name: chronyd
+    state: started
+    enabled: true
 
 - name: Disable SELinux
   ansible.posix.selinux:
@@ -50,3 +58,10 @@
     src: luna.crt
     dest: '/etc/pki/ca-trust/source/anchors/luna.crt'
   notify: update-ca-store
+
+- name: Cron to backup crons
+  ansible.builtin.cron:
+    name: "save crons"
+    minute: "0"
+    hour: "2"
+    job: "crontab -l > /mnt/backups/cron/$(hostname)"

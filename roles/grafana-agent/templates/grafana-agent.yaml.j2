@@ -1,0 +1,32 @@
+logs:
+  configs:
+  - name: default
+    clients:
+      - url: https://loki.gabisonfire.io/loki/api/v1/push
+    positions:
+        filename: /tmp/positions.yaml
+    scrape_configs:
+      - job_name: varlogs
+        static_configs:
+          - targets: [localhost]
+            labels:
+              job: varlogs
+              __path__: /var/log/*log
+              hostname: {{ansible_hostname}}
+      - job_name: dmesg
+        static_configs:
+          - targets: [localhost]
+            labels:
+              job: dmesg
+              __path__: /var/log/dmesg
+              hostname: {{ansible_hostname}}
+
+integrations:
+  node_exporter:
+    enabled: true
+    filesystem_mount_points_exclude: {{filesystem_mount_points_exclude}}
+    textfile_directory: {{textfile_directory}}
+    set_collectors:
+    {% for collector in node_exporter_collectors %}
+    - {{collector}}
+    {% endfor %}

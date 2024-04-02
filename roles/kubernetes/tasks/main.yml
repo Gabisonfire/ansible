@@ -22,3 +22,10 @@
     name: "{{ item.key }}"
     value: "{{ item.value }}"
   loop: "{{ kubernetes_sysctl | dict2items }}"
+
+- name: Ensure Docker is stopped and disabled.
+  systemd:
+    daemon_reload: true
+    name: docker
+    state: stopped
+    enabled: false

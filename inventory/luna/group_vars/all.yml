@@ -1,27 +1,26 @@
 ---
 node_exporter_version: 1.7.0
 node_exporter_collectors:
-  - --collector.disable-defaults
-  - --collector.cpu
-  - --collector.diskstats
-  - --collector.filesystem
-  - --collector.hwmon
-  - --collector.meminfo
-  - --collector.netclass
-  - --collector.netdev
-  - --collector.netstat
-  - --collector.nfsd
-  - --collector.nfs
-  - --collector.nvme
-  - --collector.os
-  - --collector.textfile
-  - --collector.time
-  - --collector.uname
-  - --collector.ethtool
-  - --collector.mountstats
-  - --collector.systemd
-  - --collector.filesystem.mount-points-exclude=^/(dev|proc|sys|var/lib/docker/.+|var/lib/kubelet/.+)($|/)
-  - --collector.textfile.directory=/etc/node_exporter
+  - cpu
+  - diskstats
+  - filesystem
+  - hwmon
+  - meminfo
+  - netclass
+  - netdev
+  - netstat
+  - nfsd
+  - nfs
+  - nvme
+  - os
+  - textfile
+  - time
+  - uname
+  - ethtool
+  - mountstats
+  - systemd
+filesystem_mount_points_exclude: "^/(dev|proc|sys|run|var/lib/docker/.+|var/lib/kubelet/.+)($|/)"
+textfile_directory: "/etc/node_exporter"
 
 packages:
   - htop
@@ -44,6 +43,8 @@ packages:
   - util-linux
   - nfs-utils
   - tar
+  - chrony
+  - qemu-guest-agent
 
 root_password: "$6$1ThI.YitKyMd.deb$i2xTtUULXz1Dg259dXk2HITe2PY8SXPqt008wxQKiuHPspCKRcFIJ3DEL39MsUsSqogqBEJueMXwjjqyNnqpv1"
 mounts: {}

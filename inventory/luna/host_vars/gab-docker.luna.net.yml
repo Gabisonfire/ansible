@@ -1,17 +1,8 @@
 ---
 mounts:
-  torrents:
-    source: //gab-data-10gb-proxmox.luna.net/hot/torrents
-    dest: /mnt/torrents
+  # torrents:
+  #   source: //gab-data-10gb-proxmox.luna.net/warm/torrents
+  #   dest: /mnt/torrents
   series:
     source: //gab-data-10gb-proxmox.luna.net/hot/series
     dest: /mnt/series
-  classics:
-    source: //gab-data-10gb-proxmox.luna.net/hot/classics
-    dest: /mnt/classics
-  backups:
-    source: //gab-data-10gb-proxmox.luna.net/cold/backups
-    dest: /mnt/backups
-  movies:
-    source: //gab-data-10gb-proxmox.luna.net/hot/movies
-    dest: /mnt/movies
