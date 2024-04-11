@@ -1,0 +1,37 @@
+- name: Download collector
+  ansible.builtin.get_url:
+    url: https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v{{ otel_version }}/otelcol-contrib_{{ otel_version }}_linux_amd64.tar.gz
+    dest: /tmp/collector.tar.gz
+
+- name: Extract collector
+  ansible.builtin.unarchive:
+    remote_src: true
+    src: /tmp/collector.tar.gz
+    dest: /tmp/
+
+- name: Copy collector
+  notify: restart
+  ansible.builtin.copy:
+    remote_src: true
+    src: /tmp/otelcol-contrib
+    dest: /usr/sbin/
+    mode: '0755'
+
+- name: Install base config
+  notify: restart
+  ansible.builtin.template:
+    src: otel-config.yaml.j2
+    dest: '/etc/otel-config.yaml'
+
+- name: Setup service file
+  notify: restart
+  ansible.builtin.copy:
+    src: otel-collector.service
+    dest: '/etc/systemd/system/otel-collector.service'
+
+- name: Start otel-collector
+  ansible.builtin.systemd_service:
+    state: started
+    enabled: true
+    daemon_reload: true
+    name: otel-collector

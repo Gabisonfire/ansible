@@ -1,0 +1,6 @@
+---
+- name: restart
+  ansible.builtin.systemd:
+    state: restarted
+    name: otel-collector
+    daemon_reload: true

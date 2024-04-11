@@ -5,8 +5,10 @@
   roles:
     - base
     - mounts
-    #- node_exporter
-    - grafana-agent
+    #- grafana-agent
+    - node_exporter
+    - otel-collector
+
 
 - name: Docker
   hosts:

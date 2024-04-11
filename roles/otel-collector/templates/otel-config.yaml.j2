@@ -1,0 +1,40 @@
+receivers:
+  filelog/std:
+    include:
+        - /var/log/lastlog
+        - /var/log/messages
+        - /var/log/cron
+        - /var/log/yum.log
+        - /var/log/dmesg
+        - /var/log/samba/log.*
+        - /var/log/dnf.log
+
+exporters:
+  otlphttp/openobserve:
+    endpoint: https://openobserve.gabisonfire.io/api/default/
+    headers:
+      Authorization: "Basic cm9vdEByb290LmNvbTpta0J3QUtYMHRrWlNGbmpL"
+      stream-name: host_agent
+
+processors:
+  resourcedetection/system:
+    detectors: ["system"]
+    system:
+      hostname_sources: ["os"]
+  memory_limiter:
+    check_interval: 1s
+    limit_percentage: 75
+    spike_limit_percentage: 15
+  batch:
+    send_batch_size: 10000
+    timeout: 10s
+
+service:
+  telemetry:
+    metrics:
+      level: none
+  pipelines:
+    logs:
+      receivers: [filelog/std]
+      processors: [resourcedetection/system, memory_limiter, batch]
+      exporters: [otlphttp/openobserve]
