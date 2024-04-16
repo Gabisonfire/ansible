@@ -15,5 +15,6 @@ kubernetes_sysctl: {
     "net.core.netdev_max_backlog":"2000",
     "net.ipv4.tcp_max_syn_backlog":"2048",
     "vm.overcommit_memory":"1",
-    "net.bridge.bridge-nf-call-iptables":"1"
+    "net.bridge.bridge-nf-call-iptables":"1",
+    "fs.may_detach_mounts":"1"
 }
