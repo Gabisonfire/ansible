@@ -8,6 +8,16 @@ receivers:
         - /var/log/dmesg
         - /var/log/samba/log.*
         - /var/log/dnf.log
+        - /var/log/pods/*/*.log
+
+  journald:
+    units:
+      - kubelet
+      - containerd
+      - crond
+      - chronyd
+      - node_exporter
+      - otel-collector
 
 exporters:
   otlphttp/openobserve:
@@ -35,6 +45,6 @@ service:
       level: none
   pipelines:
     logs:
-      receivers: [filelog/std]
+      receivers: [filelog/std,journald]
       processors: [resourcedetection/system, memory_limiter, batch]
       exporters: [otlphttp/openobserve]

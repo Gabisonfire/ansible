@@ -20,14 +20,14 @@ node_exporter_collectors:
   - --collector.ethtool
   - --collector.mountstats
   - --collector.systemd
-  - --collector.filesystem.mount-points-exclude=^/(dev|proc|sys|var/lib/docker/.+|var/lib/kubelet/.+)($|/)
-  - --collector.textfile.directory=/etc/node_exporter
+  #- --collector.filesystem.mount-points-exclude=^/(dev|proc|sys|var/lib/docker/.+|var/lib/kubelet/.+)($|/)
+  #- --collector.textfile.directory=/etc/node_exporter
 
 otel_version: "0.90.1"
 
 # Grafana-agent
-# filesystem_mount_points_exclude: "^/(dev|proc|sys|run|var/lib/docker/.+|var/lib/kubelet/.+)($|/)"
-# textfile_directory: "/etc/node_exporter"
+filesystem_mount_points_exclude: "^/(dev|proc|sys|run|var/lib/docker/.+|var/lib/kubelet/.+)($|/)"
+textfile_directory: "/etc/node_exporter"
 
 packages:
   - htop

@@ -11,7 +11,14 @@ logs:
           - targets: [localhost]
             labels:
               job: varlogs
-              __path__: /var/log/*log
+              __path__: /var/log/*
+              hostname: {{ansible_hostname}}
+      - job_name: nested
+        static_configs:
+          - targets: [localhost]
+            labels:
+              job: nested
+              __path__: /var/log/*/*
               hostname: {{ansible_hostname}}
       - job_name: dmesg
         static_configs:
@@ -19,6 +26,12 @@ logs:
             labels:
               job: dmesg
               __path__: /var/log/dmesg
+              hostname: {{ansible_hostname}}
+      - job_name: journal
+        journal:
+            max_age: 12h
+            labels:
+              job: journal
               hostname: {{ansible_hostname}}
 
 integrations:
