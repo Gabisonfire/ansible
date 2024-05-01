@@ -6,19 +6,19 @@ logs:
     positions:
         filename: /tmp/positions.yaml
     scrape_configs:
-      - job_name: varlogs
+      - job_name: snapraid
         static_configs:
           - targets: [localhost]
             labels:
-              job: varlogs
-              __path__: /var/log/*
+              job: snapraid
+              __path__: /var/log/snapraid-*
               hostname: {{ansible_hostname}}
-      - job_name: nested
+      - job_name: cron
         static_configs:
           - targets: [localhost]
             labels:
-              job: nested
-              __path__: /var/log/*/*
+              job: cron
+              __path__: /var/log/cron
               hostname: {{ansible_hostname}}
       - job_name: dmesg
         static_configs:
@@ -26,6 +26,27 @@ logs:
             labels:
               job: dmesg
               __path__: /var/log/dmesg
+              hostname: {{ansible_hostname}}
+      - job_name: messages
+        static_configs:
+          - targets: [localhost]
+            labels:
+              job: messages
+              __path__: /var/log/messages
+              hostname: {{ansible_hostname}}
+      - job_name: samba
+        static_configs:
+          - targets: [localhost]
+            labels:
+              job: samba
+              __path__: /var/log/samba/*
+              hostname: {{ansible_hostname}}
+      - job_name: pods
+        static_configs:
+          - targets: [localhost]
+            labels:
+              job: pods
+              __path__: /var/log/pods/*/*.log
               hostname: {{ansible_hostname}}
       - job_name: journal
         journal:
