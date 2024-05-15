@@ -1,27 +1,27 @@
 ---
 node_exporter_version: 1.7.0
 node_exporter_collectors:
-  #- disable-defaults
-  - cpu
-  - diskstats
-  - filesystem
-  - hwmon
-  - meminfo
-  - netclass
-  - netdev
-  - netstat
-  - nfsd
-  - nfs
-  - nvme
-  - os
-  - textfile
-  - time
-  - uname
-  - ethtool
-  - mountstats
-  - systemd
-  #- filesystem.mount-points-exclude=^/(dev|proc|sys|var/lib/docker/.+|var/lib/kubelet/.+)($|/)
-  #- textfile.directory=/etc/node_exporter
+  - --collector.disable-defaults
+  - --collector.cpu
+  - --collector.diskstats
+  - --collector.filesystem
+  - --collector.hwmon
+  - --collector.meminfo
+  - --collector.netclass
+  - --collector.netdev
+  - --collector.netstat
+  - --collector.nfsd
+  - --collector.nfs
+  - --collector.nvme
+  - --collector.os
+  - --collector.textfile
+  - --collector.time
+  - --collector.uname
+  - --collector.ethtool
+  - --collector.mountstats
+  - --collector.systemd
+  - --collector.filesystem.mount-points-exclude=^/(dev|proc|sys|var/lib/docker/.+|var/lib/kubelet/.+)($|/)
+  - --collector.textfile.directory=/etc/node_exporter
 
 otel_version: "0.90.1"
 

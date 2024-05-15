@@ -42,7 +42,7 @@
 
 - name: Start agent
   ansible.builtin.systemd_service:
-    state: started
-    enabled: true
+    state: stopped
+    enabled: false
     daemon_reload: true
     name: grafana-agent
